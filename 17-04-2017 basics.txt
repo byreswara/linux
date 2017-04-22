@@ -1,0 +1,132 @@
+                                                    basic commands
+	                                --------------------------
+cd (change directory)
+
+cd .. (back to directory)
+
+echo $0  ( it shows your current shell)
+
+echo $SHELL (it shows your default shell)
+
+whoami ( it shows whose logged in)
+
+creat file
+-------------	
+1)touch
+------------
+It used to create empty files and also to change timestamp token
+
+touch <file name>  (to creat empty file)
+
+ex: touch f1
+        or
+     touch f1 f3 f4 f5
+        or
+      touch g{1..10}
+
+
+2)cat
+---------
+It used to create a new file and write the data to that file
+
+To display existing file
+
+To append the data to the existing file
+
+syntax
+-----------
+cat <mode>  <filename>
+
+mode
+---------
+1)     <  is used to open or read or display the existing file   ( ' <  ' is optional)
+
+ex:  cat  <  <filename>
+                     or
+         cat  filename    ( ' <  ' is optional)
+
+2)     >  is used to creat and write the file, if file is exist it overwrites that file  
+
+ex: cat  >  <filename>
+       ----
+        ----
+       ----
+       -----
+      ctr+d      (to save the data and quit from that file)
+
+3)      >>  is used to append  the data to existing file
+
+ex:  cat >>filename
+         -----
+         ----
+          ---
+         ctr d       (to save the data and quit from that file)
+
+If there is no existing file it will create a new file but if there is a existing file then it append data to the existing file 
+
+
+Redirection
+-----------------
+
+input redirection -->STDIN     0<     ( '0' and '<'  both optional )
+
+output redirection-->STDOUT    1>   ( '1' is optional )
+ 
+error redirection-->STDERR      2>
+
+creat directory
+----------------------
+
+mkdir   <dirname>
+
+mkdir d1 d2 d3 d4
+
+mkdir g{1..5}
+
+mkdir -p abc/a/a1/a11 abc/a/a2 abc/b/b1  abc/b/b2  ( it can creat directorys at a time)
+
+
+1) copy -->cp
+
+2) delete -->rm
+
+3) rename or move   -->mv
+
+1) copy a file (cp)
+-------------------------
+cp   <source>   <target>
+
+cp  <source>  </path>    ( copy a file to other location )
+
+cp    /../a/a1/a11/sample  .   ( '  .  '   indicates present path)
+                   (it copy a file from another path to current path)
+
+cp -rvfp <dirname>  <destination path>
+
+2) delete a file or directory ( rm )
+------------------------------------------------
+rm  <filename>
+      or 
+rm  <filename>  <filename>  <filename>  (it delete multiple files)
+
+rmdir  <directory name>   ( it delete only  empty directory)
+
+rm -r  <directory name>    ( it removes directory including files)
+          or 
+rm -rf  <directory name>    ( ' f ' forcely )
+
+rm -r dir1 dir2 dir3  (it delete multiple directories)
+
+rm -r d*
+
+rm -r *   (it delete all files or directories)
+
+3) rename or move   ( mv )
+---------------------------------------
+
+mv  <source filename>  <target filename>  (it rename the source file)
+
+mv <filename>  <dirname with path>    (it moves that file to target directory)
+
+
+

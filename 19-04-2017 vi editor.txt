@@ -1,0 +1,147 @@
+vi  (visual interface) editor
+----------------------------------------
+vi <file name>
+
+note: firest check the file exist or not by using ls <file name>.
+         if exist take back up the file by using 'cp' command
+ex:   cp <file name> <filename_12apr2017>
+
+note : ' ~ ' it represent blank line in insert mode.
+
+{ (not important)
+
+> At the time of  ADM-3A TERMINAL there is no navigation keys. 
+    so they set (h j k l) as a navigation keys
+
+> h-left, j-down, k-up, l-right    these keys used in solaries..
+
+> vim (vi improved) is latest version of 'vi editor'
+
+}
+
+vi have 3 mode
+-----------------------
+1. insert mode
+
+2.command mode
+
+3.excute mode
+
+1.insert mode
+----------------------
+{   these are enough
+>> -I (it takes the insert mode and cursor goes to starting of the line)
+
+>> -i (it takes the insert mode with left side of the cursor)
+
+>> -a (it takes the insert mode with right side of the cursor)
+
+>> -o (it takes the insert mode and cursor goes to below the line)
+
+>> -O (it takes the insert mode and cursor goes to above the line)
+
+  } 
+
+>> cc or S (it delete the line and goto insert mode)
+
+>> cw (it delete the front word of cursor and goto insert mode)
+
+>> cb (it delete the back word of cursor and goto insert mode)
+
+>> s (it delete the character and goto insert mode)
+
+2. command mode
+----------------------------
+>>  to go command line press "esc" button 2 or more times.
+
+to navigate
+-----------------------
+
+>> w (it navigate word by word forward)
+
+>> b (it navigate word by word backword)
+
+>>G (cursor goto end of the file)
+
+>>gg (cursor goto starting of the file)
+
+>> ^ (cursor goes starting of the line)
+
+>> $ (cursor goes ending of the line)
+
+>>( L M H ) navigate by page level
+
+delete
+------------
+
+ >> dd (it delete entair line)
+
+>> 4dd (it delete 4 lines)
+
+>> dw (it delete the front word)
+
+>>4dw (it delete the 4 front words)
+
+>>db (it delete the back word)
+
+>>4db (it delete the 4 back words)
+
+>> x (it delete the charactrs)
+
+copy and paste
+-----------------------
+>> yy (copy the entair line)
+
+>> 4yy (copy 4 lines)
+
+>> p (paste the line)
+
+>> 4p (paste the 4 lines)
+
+>> u (undo) below it displays no.of modifications
+
+>> ctrl + r (redo)
+
+>> r (replace the charecter)
+
+>> R (replace the line)
+
+3. excuted mode
+--------------------------
+>>  to go executed mode press ' : '
+
+>> :w (to save)
+
+>> :q (to quit)
+
+>> :wq (save and quit)
+
+>>:wq! (save and quit forcely)
+
+>> :10 (goto 10th line)
+
+>> :6d (6th line delete)
+
+>> :8,12d (it delete lines from 8 to 12th lines)
+
+serching
+-----------------
+>> :/<source>
+       it shows 1st occurance
+n (next occurance)
+
+N (previous occurance)
+
+replace
+------------
+>>  :%s/<source>/<target>
+    it serch and replace 1st occurance
+
+>> :%s/<source>/<target>/g       g-global level
+      it serch and replace all occurance
+
+>> :%s/<source>/<target>/gi     i-ignore case sensitive
+       it serch and replace all occurance with ignore case sensitive
+
+>> :%s/^$/target
+      it replace the space with target

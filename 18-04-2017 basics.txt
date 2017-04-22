@@ -1,0 +1,101 @@
+>> ls
+-------
+ls -F  (to find file or direcotry. "/" it represents directory)
+
+ls -l      (long list, we can see the permission of perticular file)
+
+ls -a   (all files including hidden files)
+
+ls -t  (time stamp in ore)
+
+ls -r  (recursive time stamp)
+
+ls -h (human readble format )
+
+note:  In environment we should use "ls -ltr".
+
+>>  ls |wc -l  or -w or -c (it count's lines or words or charecters )
+
+>> grep
+-----------
+1. grep    (it grep the single file)
+
+2. egrep    (it frep the multiple files)
+
+ex: ls |grep <file name>
+      ls |egrep <"file1 | file2">
+
+3. grep -i   (ignore the case sensitive)
+
+ex: ls |grep -i      <file name>
+      ls |egrep -i    <"filename|filename">
+
+note: if 2 files with samename with capital and small letters. then, when we                  apply  '-i '  it shows both files.
+
+4. grep -w   (it grep exact match what we enter)
+
+ex: ls |grep -w <file name>
+      ls |egrep -w <"filename|file name">
+
+5. grep -v  (it vomit that file)
+
+6.grep -wv (it exact vomit the file)     
+
+ex: ls |grep -v <file name>
+      ls |egrep -v <"filename|file name"> 
+
+7. grep ^t  (it grep the file with letter starting  't' )
+
+>> cd -  (it goes to previous working directory)
+
+>> sleep 20  (it sleep 20 seconds)
+
+>>  '>' it overwrite the data
+       '>>' it append the data
+
+>> echo $?   (it gives previous command result)
+      '0' says successfull
+
+>> awk'{print $1,$2,$3.......}'  <file name or path>
+      (it filter perticular field what we want. $1 is field 1 and $2 is field2....... )
+
+>> df -h  (disk free with human readble format)
+
+>> file <file name>   (it gives the type of file)
+
+note: in environment dont open the 'data file' in 'vi editor', it will currpt.
+          we must open the 'data file' in 'strings'
+ex: strings  <data file name> 
+
+creat 100MB file
+-------------------------
+>> dd if=/dev/zero of =/tmp/byresh bs=1M count=100
+
+alias
+---------
+it assign command to given name
+
+ex: alias byresh="pwd"
+       (now when you enter 'byresh' it shows present working directory like 'pwd' command)
+
+unalias
+------------
+it removes assign values
+
+ex: unalias byresh
+
+note: when you give 'alias'  command it shows the list of assinged values   
+
+find
+----------
+find </serch path> -name <file name>
+
+ex: find  /home -name samplefile1
+      find /home -name r* |wc -l
+      (it gives the no.of lines with starting letter 'r' in the serched files)
+
+ex: find /tmp -size +50M
+      (it fetch the files witch file have more than 50MB)
+
+ex: find /tmp -mtime 0
+      (it gives the files which are modifed in 24 hours; 0 = 24 hours; 1 =1day....)
