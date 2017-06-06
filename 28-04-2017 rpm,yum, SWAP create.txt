@@ -1,0 +1,188 @@
+rpm  -- redhat package manager
+------------------------------------------------
+
+rpm -ivh  <package full name or URL >   (to install package)
+
+rpm -ivh  --nodeps <package full name or URL>   (to install package without dependies)
+
+rpm -Uvh  <package name>   (to update package)
+  
+rpm -e <package name>     (to uninstall the package)
+
+rpm -qa --last  (to listout installed packages )
+
+rpm -qi <package name>  (listout the files of that package)
+
+rpm -qf  <file of package>   (it shows respective package  name of that file )
+
+>> which ls    or  whereis ls  (it shows the file location of that command )
+   output: /bin/ls
+
+>> rpm -qf   /bin/ls   (it shows the respective package)
+
+yum yellowdog updated modifier
+-------------------------------------------------
+
+in  /etc/yum.repo.d directory .repo files are ther
+
+cat /etc/yum.repo.d/ amzn-main.repo  (it have repo details)
+
+>> yum clean all  (it clean current yum cache)
+
+>> yum repolist  (it rebuild the yum repository)
+note: these two commands are non impacting commands
+
+>> yum info <package name>   (it gives full details of that package) 
+
+>> yum install <package name >   (it installed the package)
+
+>> yum update <package name>  (it update the package)
+
+>> yum remove <package name>    (it ininstall that package)
+
+>> yum history   (it gives the history of installation)
+
+>> yum grouplist (it listout the all yum groups)
+
+>> yum groupinstall  <group name>   (it will insatall group)
+
+>> yum groupremove  <group name>  (it uninstall that group)
+
+>> yum list (it display all installed and update packages)
+
+>> yum update kernel  (kernal patching)
+
+>>yum info kernel
+
+environment variables
+----------------------------------------
+
+>>env  (it show the predefined  environment variable)
+
+>> set   (it display current environment)
+
+>> echo $PATH   (it  defined the search path for commands )
+
+To set the JAVA_HOME environment variable to the directory where you installed the J2SE SDK application, enter:
+
+>> export PATH=${PATH}:/usr/java/jdk1.5.0_07/bin
+
+We can set multiple paths as follows:
+
+ ex: export ANT_HOME=/path/to/ant/dir
+
+>> export PATH=${PATH}:${ANT_HOME}/bin:${JAVA_HOME}/bin
+
+Append the $PATH settings, enter:
+
+export PATH=${PATH}:${HOME}/bin
+
+How Do I Make All Settings permanent?
+
+>>  vi  ~/.bash_proflle
+append the path , save and  close it.
+
+SWAP
+-----------
+it is virtual memory
+
+RAM is a physical memory
+
+>> free -M or -G   (to check swap memory)
+
+                  redhat chart for swap recomandation
+                 ----------------------------------------------------------
+
+RAM 				swap recomandation size
+------------				-------------------------------------
+lessthan 2GB                                                    double the size
+
+2GB to 8GB			same size
+
+8GB to 64GB			minimum 4GB+
+
+64GB beyond			minimum 4GB+
+
+to create swap in native type
+--------------------------------------------
+
+1. disk allowacation
+
+2.scan
+
+3.partition
+-----------------
+after the partition we need to change file type of partition, otherwise fdisk would make it ext4 which is default filesystem for rhel6
+
+>>type ' t ' at command prompt
+
+>> select the disk no. which is tobe for swap
+
+>> partition ID for swap is 82 so we need to change file type to 82
+
+>> enter ' 82 '
+
+>> now save with ' w ' command
+
+4. >> mkswap  <disk name>  (it create swap)
+
+5. >>swapon  <disk name>  (swap memory get active)
+note: there is no mount consept for swap memory
+
+6. >>cat /proc/swaps   or  free -m  (Check that the swap file was created )
+
+7. >>vi  /etc/fstab entry (to make it available after reboot )
+    <disk name>  swap  swap  defaults  0  0
+                              or 
+echo "/dev/sdg1  swap  swap defaults  0  0">> /etc/fstab
+
+source: http://www.computernetworkingnotes.com/file-system-administration/how-to-create-swap-partition.html
+
+to create swap partition in linux using lvm
+----------------------------------------------------------------
+1. disk allowacation
+
+2.scan
+
+3.partition
+-----------------
+after the partition we need to change file type of partition, otherwise fdisk would make it ext4 which is default filesystem for rhel6
+
+>>type ' t ' at command prompt
+
+>> select the disk no. which is tobe for swap
+
+>> partition ID for swap is 82 so we need to change file type to 82
+
+>> enter ' 82 '
+
+>> now save with ' w ' command
+
+4.>> pvcreate <disk name>  (to create pv)
+
+5.>> vgcreate  <vg name>  <disk name> 
+
+6.>> lvcreate  -L  +200M  -n  <lv name>  <vg name>
+
+7.mkswap  </dev/samplevg/samplelv>   (to create swap filesystem)
+
+8.>>swapon  </dev/samplevg/samplelv>  (swap memory get active)
+
+9.>>cat /proc/swaps   or  free -m  (Check that the swap file was created )
+
+7. >>vi  /etc/fstab entry (to make it available after reboot )
+    </dev/samplevg/samplelv>  swap  swap  defaults  0  0
+                              or 
+echo "/dev/samplevg/samplelv  swap  swap defaults  0  0">> /etc/fstab
+
+source: https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/5/html/Deployment_Guide/s2-swap-creating-lvm2.html
+
+rollback
+----------------
+1.>> swapoff  <disk name>
+
+2. partition delete
+
+3. remove fstab entry
+
+4.disk delete

@@ -10,7 +10,29 @@ echo $SHELL (it shows your default shell)
 
 whoami ( it shows whose logged in)
 
-creat file
+last |grep -i reboot  (it shows the details, when the system boot )
+
+watch -n 5 uptime  (it is used for only system monitering for respective intervals)
+
+note : 5 is seconds
+
+shutdown -h now  (system get shutdown)
+
+NOTE : " shutdown , reboot , init "these are never do  in environment. 
+              if you want to grep these names only use half command or name
+
+date -s "03 may 2017 06:39:09" (to set date and time)
+
+change timezone
+------------------------------
+
+>> ln -sf   /usr/share/zoneinfo/Asia/Calcutta   /etc/localtime   (it is link file)
+
+>> unlink  /etc/localtime   (to unlink)
+
+source:  http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html   
+
+creat file 
 -------------	
 1)touch
 ------------
@@ -69,10 +91,21 @@ Redirection
 -----------------
 
 input redirection -->STDIN     0<     ( '0' and '<'  both optional )
+    ex: like auto fill in railway, fdisk  /dev/sda  < /tmp/ss
 
 output redirection-->STDOUT    1>   ( '1' is optional )
  
 error redirection-->STDERR      2>
+
+interactive:
+------------------
+it will wait for user acknowledgement
+ex: vi, ls
+
+non-interactive:
+------------------------
+it will simply run the program or command and comes out to shell
+ex: date, cal
 
 creat directory
 ----------------------

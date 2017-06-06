@@ -1,0 +1,347 @@
+permissions for file , directory , usrer and group
+-----------------------------------------------------------------------
+'chmod' used for change the permission of file and directory 
+>> chmod  <755>  <filename>
+
+>> stat <file or directory name>  (it display full details of permissions of that file or directory)
+
+'chown' used for change the users permission 
+>> chown <root>:<root>  <file or directory name> change the owner and group
+
+>> chown <root> <file or directory name> change only  owner 
+
+ls -l (it display the permission)
+
+ex:  drwxr-xr-x  3 ec2-user ec2-user   4096 Apr 23 05:36 back1
+       -rw-r--r--  1 root     root        101935 Apr 30 09:00 byresh.zip
+
+in this 'd' tells its a directory and first ( - ) tells its a file.
+
+- rw- rw- rw-
+  u     g      o
+
+u-->owner or user
+
+g-->group
+
+o-->others
+
+read-->r
+
+write-->w
+
+execute-->x
+
+-->Default permission for regular file based on umask(022) is -rw-r--r--(644)
+
+-->But file permission in genaral for the file is 666(-rw-rw-rw-)
+
+-->Default permission for directory based on umask(022) is drwxr-xr-x(755)
+
+-->But file permission in genaral for the directory is 777(drwxrwxrwx)
+
+umask -->user creation mask
+
+$umask
+
+0022
+
+0   0     2      2
+
+1st 0 stickybit
+
+2nd 0 It removes file permissions from owner(user)
+
+2 It removes file permissions from group
+
+2 It removes file permissions from others
+
+
+666
+022(-)
+-------
+644   (  -rw-r--r-- )
+-------
+
+777
+022(-)
+-------
+755   (  drw-r-xr-x )
+-------
+
+octal code
+------------
+read-->4
+
+write-->2
+
+execute-->1
+------------
+Total=7
+------------
+
+7->rwx
+
+6->rw
+
+5-->rx (r-x==>101)
+
+4-->r
+
+3-->wx
+
+2-->w
+
+1->x
+
+0-->No permission
+
+disk management
+----------------------------
+2 types of michene
+
+1. virtual michene (no HBA)
+2. physical michene  (it have HBA)
+
+HBA ---- host bus adapter
+
+wwpn --- world wide port number
+wwnn --- world wide node number
+
+HBA have wwpn and wwnn
+
+In linex disk names like /dev/sda, /dev/sdb........
+
+physical michene attached with SAN (raw) storage
+
+>> fdisk -l  (it shows all connected disk)
+note: in environment it shows 1000's of disks so.. use grep command.
+
+ex:  fdisk -l |grep -i <disk name>
+
+NATIVE CONTROL:
+
+1.disk allowcation and scaning
+----------------------------------------------
+
+1. fdisk -l |grep -i disk  >/tmp/test  (redirect this fdisk output to identify the new disk for feature)
+
+2. attach or add the disk
+
+for vmware michenes
+--------------------------------
+3. rescan-scsi-bus.sh
+
+4.echo "- - -" > /sys/class/scsi_host/host0/scan
+
+5. sleep 30
+
+6. echo "- - -" > /sys/class/scsi_host/host1/scan
+
+7. sleep 30
+
+note: 1.check how many hosts are there. and do this for every host
+
+          2. if disk not added in aws instance do above steps   
+
+scsi --- small computer system interface
+
+8. fdisk -l |grep -i disk  >/tmp/latest (redirect this fdisk output to identify the new disk for feature)
+
+9. sdiff   /tmp/test  /tmp/latest  (it will use to compare or find the difference of flat files)
+note : we can use ' diff ' it shows difference only. but ' sdiff ' do compare. 
+
+{ 
+   how to open a file in all directories at a time?
+
+cat  /sys/class/scsi_host/host*/proc_name
+
+}
+
+2. after identifieng the disk  we can do partition
+--------------------------------------------------------------------
+ 
+>> fdisk  <disk name>  (menu driven interactive mode)
+
+ex: fdisk  /dev/sdg
+
+m  --- display command action
+
+n  ---  add a new partition
+
+p  --- print the partition table
+
+d  ---  delete a partition
+
+w  --- write table to disk and exit
+
+partition the disk
+--------------------------
+
+>> fdisk /dev/sdg
+
+1. enter ' n ' ( to add new partition )
+
+2. Then select ' p ' (primary)
+
+note: 1. we can add 4 primary partition
+                        or 
+             we can add 3 primary partition last one select ' e ' extend
+
+          2. after select extend we can add 15 primary partitions
+
+3. select 1 (it shows default value we can hit enter)
+
+4. select default first sector (simply hit enter )
+
+5. select last sector, in this we can enter the size of disk which we want. like +100M
+
+6. repeat the above steps from 1 to 5 and in the third step select 2
+
+7.  repeat the above steps from 1 to 5 and in the third step select 3
+
+8.  after 3 primary partitions , we should do the partitions in extended type.
+
+9. enter ' n ' ( to add new partition )
+
+10. Then select ' e ' (extended) , (default it shows ' e ' we can do hit enter)
+      (from this onwords automatically it assigns the partitions number)
+
+11. select default first sector (simply hit enter )
+
+12. select last sector, in this we should do hit enter, so.. it will take all the remaining size. from that we can do partitions
+
+13 enter ' n ' ( to add new partition )
+
+14 select default first sector (simply hit enter )
+
+15 select last sector, in this we can enter the size of disk which we want. like +100M
+
+note: in command mode enter ' p ' you can view the added partition or disk details.
+
+16. finally enter ' w ' to quit
+
+3. file system creation
+---------------------------------
+mkfs -t ext4  <disk name>   (to create file system)
+
+file -sL  <disk name>  (to check the type of file system)
+
+4.mount the disk
+--------------------------
+create a directory in the root ' /<directory name> '
+
+>> mount  <disk name> <directory path>
+  ex: mount   dev/sdg1   /test
+
+>>umount <disk name>  (to unmount the disk)
+
+>> df -h  or df -PhT  (display the mounted disks)
+
+>> cd <directory path>
+       (do the job it will write all the data in new  disk)
+
+5.fstab entry
+---------------------- 
+open /etc/fstab
+
+and enter the disk details
+          or 
+>> echo "/dev/sdg1  /test   ext4  noatime 0 0" >> /etc/fstab
+
+LVM (Logical Volume Management )
+-------------------------------------------------------------
+To efficiently use the disk space or management
+
+To increase root storage lvm can do on fly
+
+For shrinking down times need
+
+1. pv -- physical volume
+
+2.vg -- volume group
+
+3. lv -- logical volume
+
+
+1.disk allowcation and scaning
+-------------------------------------------------
+same as above 
+
+2. after identifieng the disk  we can do partition
+---------------------------------------------------------------------------- 
+same as above 
+
+3. to create and remove pv 
+----------------------------------------
+
+>> pvcreate <disk name>  (to create pv)
+
+>> pvs or pvdisplay  (to listout pv's)
+
+>> pvremove  <disk name>  (to remove pv)
+
+4. to create vg
+---------------------
+
+>>vgcreate  <vg name>  <disk name>  <disk name2>
+     (we can add multiple)
+
+>>vgs  or  vgdisplay  (to listout vg's)
+
+5. to create lv
+--------------------
+
+>> lvcreate  -L  +200M  -n  <lv name>  <vg name>
+
+>> lvs or lvdisplay (to listout lv's)
+
+6. file system creation
+---------------------------------
+mkfs -t ext4  </dev/samplevg/samplelv>   (to create file system)
+
+7. mount the disk
+---------------------------
+create a directory in the root ' /<directory name> '
+
+>> mount  </dev/samplevg/samplelv>   <directory path>
+
+8. fstab entry
+-------------------- 
+
+echo "/dev/mapper/testvg-testlv  /mnt  ext4  defaults   0  0" >> /etc/fstab
+
+To extend , reduce and remove LVM
+------------------------------------------------------
+
+first check the space is available or not in the vg's 
+
+>> vgs 
+
+>> lvextend  -L  <+100M>  /dev/samplevg/samplelv
+note : if  wont we  specify positive symbol it will extend to the given size.
+
+>> resize2fs  /dev/samplevg/samplelv
+
+>> lvreduce -L  < - 100M>  /dev/samplevg/samplelv
+note : if wont we  specify negative symbol it reduced to the given size.
+
+>> resize2fs  /dev/samplevg/samplelv
+
+>> lvremove  /dev/samplevg/samplelv
+
+To extend  , reduce and remove  vgs
+-----------------------------------------------------
+nothing but add pv's to vg
+
+>> vgextend  <vg name>  <disk name>
+
+nothing but remove pv's to vg
+
+>> vgreduce   <vg name>  <disk name>
+
+>>vgremove   <vgname>
+
+>>mke2fs  -n  <disk name>  (will display alternative super blocks for filesystem)
+
+>>e2fsck  <superblock no.>  <disk name> (check with alternative super blocks for a filesystem )

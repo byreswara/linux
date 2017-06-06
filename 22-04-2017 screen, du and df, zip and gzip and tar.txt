@@ -1,0 +1,127 @@
+emulation of a shell
+--------------------------------
+nested shell (means inside shell)
+
+" screen and bg " commands are used for emulation.
+
+these are almost equal. but most bg are not used in environment
+
+these are used when we are not present.
+
+screen
+-----------
+screen is not inbuilt command. if not installed...
+
+>> yum install screen  (to insatall screen command)
+
+if we run a program in screen, it will run even logout.
+
+>> screen -S  <socket name>   (to enter nested shell)
+
+>> ctrl a+d    (to quit or detached nested shell)
+
+>> screen -ls   (to listout sockets which are running in nested shell)
+
+>>screen -r <PID.socketname>  to resume the socket
+  ex: screen -r 2715.name
+
+>> screen -X -S <PID.socketname> quit  (to delete the screen seccion) 
+      we can use " kill " also instead of   " quit " to kill the process.
+ 
+ note: after complete the job we should delete it.
+
+jobs     (this is mostly not used)
+-------
+command  &   (this command run in background)
+
+jobs  (it will shows list of jobs run in background)
+
+fg <job number>  (it resume that job)
+
+ctrl + z  (back to foreground)
+
+bg <job number>  (it shows which job is running)  
+
+kill -9 %<job no.>   (it kill that process) 
+
+uname 
+-----------
+>> uname -a (details of os and more)
+
+>> uname -r  (kernal version)
+
+>> uname -s  (os name)
+
+>> uname -m (platform)
+
+>> uname -p (platform)
+
+>> uname -n (node name)
+
+df and du
+---------------
+df (disk file system)
+
+df command not work in solaries
+
+>>df -h  (how many mounted file systems are there)
+
+>>df -k  (it displys in kilobytes)
+
+>>df -i  (it displys inode filesystem)    its importent 
+
+>>df -Ph (file system entry per line)
+
+>>df -PhT  (it shows file system)
+
+du (disk usage)
+-----------------------
+du -sh <directory name>   (it shows directory usage size)
+note: ls -ld  <directory name> (it shows only directory default size)
+          ls -l  <directory name>    (it shows the files in the directory)
+
+compress the data using ( tar,gzip,zip )
+---------------------------------------------------------
+compress the data means, it reduce network bandwidth.
+
+it compress the data by   65% average
+
+bundle the data by using tar
+ 
+zip
+-----
+it compress the data and bundel the files
+>> zip  <targetname.zip>  <source file>  (to zip or compress the file)
+
+>> zip -r  <targetname.zip>  <source directory>  (to zip the directory including files)
+
+>>unzip -l <targetname.zip>  (list the ziped files)
+
+>>unzip  <targetname.zip>     (to unzip or uncompress the file or  directory)
+
+tar
+-----
+tar  -cvf  <targetname.tar>  <source name>  (to bundle the files)
+
+tar -tvf  <targetname.tar>  (to view the tarred files)
+
+tar -xvf  <targetname.tar>  (to untar)
+
+tar -xvf  <targetname.tar> -C  <path>   (to untar in specific path)
+
+gzip
+-------
+gzip  <source file>  (to compress the file)
+
+gzip -r  <source directory>  (to compress the files in the directory)
+
+gunzip -c <targetname.gz>  (listout  the compressed files)
+
+zcat  <targetname.gz>  (listout  the compressed files)
+
+gunzip  <targetname.gz>     (to unzip or uncompress the file or  directory)
+
+NOTE: in this source file is replaced by new compressed file
+              best way is first tar the files then do gzip
+
+ NOTE: dont modified any application configirations or process in environment
