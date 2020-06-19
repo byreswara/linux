@@ -1,0 +1,12 @@
+find . -type f -printf '%f\n' |sort | uniq -d |
+   while read filename; do
+     find . -type f | grep -w "$filename"
+    done
+    
+    
+    or
+    
+    find . -type f | sed's_.*/__' |sort | uniq -d |
+   while read filename; do
+     find . -type f | grep -w "$filename"
+    done
