@@ -1,5 +1,11 @@
+# sh choose.sh patch  ----> execute command
+# cat version.txt     ----> version.txt file
+# 0 0 0
+
+# assinging valuse into variables
 major=`awk '{print $1 }' version.txt`; minor=`awk '{print $2 }' version.txt`; patch=`awk '{print $3 }' version.txt`
 
+#script start
 if [ 'patch' = $1 ] 
  then
    patch=$((patch + 1))
